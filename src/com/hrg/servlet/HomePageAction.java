@@ -69,10 +69,11 @@ public class HomePageAction extends HttpServlet {
 	        	Date begintime = new Date();
 	        	System.out.println("start to fetch!");
 	        	Iterator<IndexManager.PCpair> qres = index_test.first_search(input_ques);
+	        	
 	        	 int i=0 ;
 	        	
 	        	if(qres != null) {
-	        		request.setAttribute("newsNum",""+10);
+	        		
 	                while(qres.hasNext()){
 	                IndexManager.PCpair pcpair = qres.next();
 	                System.out.println(pcpair.getId()+"===="+pcpair.getQuestion());
@@ -89,6 +90,7 @@ public class HomePageAction extends HttpServlet {
 				    }
 				     i++;
 	                }
+	                request.setAttribute("newsNum",""+i);
 					Date endtime = new Date();
 					long timeOfsearch = endtime.getTime()-begintime.getTime();
 					request.setAttribute("searchTime",""+timeOfsearch);

@@ -115,13 +115,12 @@ public class index_test {
 	        	{//0代表列数，z代表行数
 	                String question1 =sheet.getCell(0, z).getContents();
 	                String question2 =sheet.getCell(1, z).getContents();
+	                
 	                Iterator<IndexManager.PCpair> qres1 = index_test.first_search(question1);
 	                Iterator<IndexManager.PCpair> qres2 = index_test.first_search(question2);
 	                String ans1 = "";
 	                String ans2 = "";
 	                
-//	                if(qres1 != null) ans1 = qres1.next().getQuestion();
-//	                if(qres2 != null) ans2 = qres2.next().getAnswer();
 	                if(qres1 != null) {
 		                while(qres1.hasNext()) {
 		                	ans1 += qres1.next().getQuestion()+"_";
@@ -139,17 +138,6 @@ public class index_test {
 		                System.out.println(ans2);
 	                }
 	                
-//	                
-//	                if(ans1.equals(ans2) && !ans1.equals("")) {
-//	                	Label label = new Label(2, z, "1");
-//	                	sheet.addCell(label);
-//	                	System.out.println(question1 +"----"+question2+": 1" );
-//	                }
-//	                else {
-//	                	Label label = new Label(2, z, "0");
-//	                	sheet.addCell(label);
-//	                	System.out.println(question1 +"----"+question2+": 0" );
-//	                }
 	              }
 	        	book_write.write();
 	        	book_write.close();
@@ -158,35 +146,5 @@ public class index_test {
 	        	e.printStackTrace();
 	        }
     }
-    public static String sorted_by_pattern(String ans,String question) {
-    	String line = null;
-		 try {
-
-			 String[] args1 = new String[] { "python", "E:\\study\\hrg_project\\bigDataCompetition\\bank\\demo\\pattern_demo\\data\\sorted_by_pattern.py", ans,question}; 
-	           Process pr=Runtime.getRuntime().exec(args1);
-	           
-//	           Process p=Runtime.getRuntime().exec("net user");  
-//	            br=new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("GBK")));  
-	            
-	           BufferedReader in = new BufferedReader(new InputStreamReader(
-	             pr.getInputStream(),Charset.forName("GBK")));
-	           while ((line = in.readLine()) != null) {
-//	        	String newStr = new String(line.getBytes("utf-8"), "GBK");
-//	            System.out.println("*******"+newStr);
-//	            line = newStr; 
-	        	System.out.println("*******"+line);
-	            return line;
-	           }
-	           in.close();
-	           pr.waitFor();
-	           System.out.println("end");
-	          } 
-	        catch (Exception e) {
-	           e.printStackTrace();
-	          }
-		 
-    	return line;	
-    }
-    //建行外地卡取款手续费
     
 }
