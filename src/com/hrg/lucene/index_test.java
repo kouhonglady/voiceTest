@@ -2,21 +2,30 @@ package com.hrg.lucene;
 
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.Iterator;
-
+import javax.servlet.RequestDispatcher;
 import org.json.JSONException;
+import com.hrg.lucene.IndexManager.PCpair;
+import com.hrg.voice.synthesize.MyThread;
+
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 /**
- * Created by hyz.
+ * Created by lingxue
+ * 
  */
 public class index_test {
 	//This is a test
 	int num=1;
 	 /** 判断索引是否已经创建*/
  public static Boolean findIndex() {
-	    	File file = new File("D:/project/environment/dataset/index/segments.gen");	    	
+	    	File file = new File("E:/study/hrg_project/environment/dataset/index/segments.gen");	    	
 	    	 if (file.exists()) {
 	    		 System.out.println("file exists");
 	    		 return true;
@@ -28,7 +37,7 @@ public class index_test {
 	        //这个是建索引的过程
 		 	System.out.println("Start making index.\n");
 	        IndexManager im = new IndexManager();
-	        String dir = "D:/project/environment/dataset/WechatCBC.xls";
+	        String dir = "E:/study/hrg_project/environment/dataset/WechatCBC.xls";
 	        try{
 	        	Workbook book = Workbook.getWorkbook(new File(dir));
 	        	//0代表第一个工作表对象
@@ -86,4 +95,96 @@ public class index_test {
 	    System.out.println("down!");
 		return qres;
 	    }
+    public static void main(String[] arg) {
+    	 String dir = "E:/study/hrg_project/environment/dataset/test.xls";
+    	 
+    	 
+	        try{
+	        	Workbook book = Workbook.getWorkbook(new File(dir));
+	        	//0代表第一个工作表对象
+	        	
+	        	WritableWorkbook book_write = book.createWorkbook(new File(dir),book);
+	        	//WritableSheet sheet =book.getSheet(0);
+	        	WritableSheet sheet = book_write.getSheet(0);
+	        	int rows =sheet.getRows();
+	        	int cols =sheet.getColumns();
+	        	System.out.println(rows+","+cols);
+	        	for (int z = 0; z <rows; z++)
+	        	{//0代表列数，z代表行数
+	                String question1 =sheet.getCell(0, z).getContents();
+	                String question2 =sheet.getCell(1, z).getContents();
+	                Iterator<IndexManager.PCpair> qres1 = index_test.first_search(question1);
+	                Iterator<IndexManager.PCpair> qres2 = index_test.first_search(question2);
+	                String ans1 = "";
+	                String ans2 = "";
+	                
+//	                if(qres1 != null) ans1 = qres1.next().getQuestion();
+//	                if(qres2 != null) ans2 = qres2.next().getAnswer();
+	                if(qres1 != null) {
+		                while(qres1.hasNext()) {
+		                	ans1 += qres1.next().getQuestion()+"_";
+		                }
+		                Label label = new Label(2, z, ans1);
+	                	sheet.addCell(label);
+		                System.out.println(ans1);
+	                }
+	                if(qres2 != null) {
+		                while(qres2.hasNext()) {
+		                	ans2 += qres2.next().getQuestion()+"_";
+		                }
+		                Label label = new Label(3, z, ans2);
+	                	sheet.addCell(label);
+		                System.out.println(ans2);
+	                }
+	                
+//	                
+//	                if(ans1.equals(ans2) && !ans1.equals("")) {
+//	                	Label label = new Label(2, z, "1");
+//	                	sheet.addCell(label);
+//	                	System.out.println(question1 +"----"+question2+": 1" );
+//	                }
+//	                else {
+//	                	Label label = new Label(2, z, "0");
+//	                	sheet.addCell(label);
+//	                	System.out.println(question1 +"----"+question2+": 0" );
+//	                }
+	              }
+	        	book_write.write();
+	        	book_write.close();
+	        	book.close();
+	        }catch(Exception e){
+	        	e.printStackTrace();
+	        }
+    }
+    public static String sorted_by_pattern(String ans,String question) {
+    	String line = null;
+		 try {
+
+			 String[] args1 = new String[] { "python", "E:\\study\\hrg_project\\bigDataCompetition\\bank\\demo\\pattern_demo\\data\\sorted_by_pattern.py", ans,question}; 
+	           Process pr=Runtime.getRuntime().exec(args1);
+	           
+//	           Process p=Runtime.getRuntime().exec("net user");  
+//	            br=new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("GBK")));  
+	            
+	           BufferedReader in = new BufferedReader(new InputStreamReader(
+	             pr.getInputStream(),Charset.forName("GBK")));
+	           while ((line = in.readLine()) != null) {
+//	        	String newStr = new String(line.getBytes("utf-8"), "GBK");
+//	            System.out.println("*******"+newStr);
+//	            line = newStr; 
+	        	System.out.println("*******"+line);
+	            return line;
+	           }
+	           in.close();
+	           pr.waitFor();
+	           System.out.println("end");
+	          } 
+	        catch (Exception e) {
+	           e.printStackTrace();
+	          }
+		 
+    	return line;	
+    }
+    //建行外地卡取款手续费
+    
 }

@@ -29,12 +29,9 @@ import org.apache.lucene.util.Version;
 
 
 
-/**
- * Created by hyz
- */
 public class IndexManager {
 	/**init**/
-    private String indexPath = "D:/project/environment/dataset/index";  //索引路径
+    private String indexPath = "E:/study/hrg_project/environment/dataset/index";  //索引路径
 
     private Analyzer analyzer = null;  //分析器，先开始定义这些数据类型，后来再初始化
 
@@ -47,7 +44,7 @@ public class IndexManager {
     private Query query = null;
     private  QueryBuilder builder = null;  //这些是用来干什么的
     public IndexManager() throws IOException {  //初始化函数
-    	indexPath = "D:/project/environment/dataset/index";  //索引路径
+    	indexPath = "E:/study/hrg_project/environment/dataset/index";  //索引路径
         analyzer = new SmartChineseAnalyzer();  //处理中文的分析器,这里更之前的有些不同。
 
         rDir = new RAMDirectory();
