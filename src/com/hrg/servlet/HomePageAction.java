@@ -29,6 +29,7 @@ public class HomePageAction extends HttpServlet {
 	
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	SampleClient sc = new SampleClient(); //语音识别核心类

@@ -18,6 +18,7 @@ import javazoom.jl.player.Player;
 
 public class VoiceSynthesize implements  Runnable
 {
+	
 	   //设置APPID/AK/SK 
 		 public  final static String APP_ID = "11239226";
 	    public  final static String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";

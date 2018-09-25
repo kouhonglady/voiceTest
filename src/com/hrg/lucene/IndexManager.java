@@ -30,7 +30,7 @@ import org.apache.lucene.util.Version;
 
 
 public class IndexManager {
-	/**init**/
+	/**ini  t**/
     private String indexPath = "E:/study/hrg_project/environment/dataset/index";  //索引路径
 
     private Analyzer analyzer = null;  //分析器，先开始定义这些数据类型，后来再初始化

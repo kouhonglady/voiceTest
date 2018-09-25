@@ -7,7 +7,8 @@ public class TestPrecision {
 	 public static void main(String[] arg) {
 		 try {
 	           //String a=getPara("car").substring(1),b="D34567",c="LJeff34",d="iqngfao";
-	           //String[] args1=new String[]{ "python", "D:\\pyworkpeace\\9_30_1.py", a, b, c, d };
+	           
+			 //String[] args1=new String[]{ "python", "D:\\pyworkpeace\\9_30_1.py", a, b, c, d };
 	           //Process pr=Runtime.getRuntime().exec(args1);
 	           String url="http://blog.csdn.net/thorny_v/article/details/61417386";
 	           System.out.println("start;"+url);

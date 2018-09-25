@@ -9,6 +9,7 @@ import java.util.HashMap;
 import com.baidu.aip.speech.AipSpeech;
 
 public class Test{
+	
 	 public  final static String APP_ID = "11239226";
 	    public  final static String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";
 	    public  final static String SECRET_KEY = "PGOOX3p8zezqGnmMIDmg0UPD9QDsQuGU";

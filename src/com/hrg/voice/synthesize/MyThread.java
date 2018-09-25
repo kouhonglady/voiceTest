@@ -15,6 +15,7 @@ public class MyThread extends Thread{
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
