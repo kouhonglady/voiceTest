@@ -20,12 +20,17 @@ import jxl.write.WritableWorkbook;
  * Created by lingxue
  * 
  * 
- * 
  */
+
+
+
 public class index_test {
 	//This is a test
 	int num=1;
-	 /** 判断索引是否已经创建*/
+	
+	//static String root_path = index_test.class.getClassLoader().getResource("").getFile().replaceAll("/voiceTest/WebContent/WEB-INF/classes/", "");
+	
+	/** 判断索引是否已经创建*/
  public static Boolean findIndex() {
 	    	File file = new File("E:/study/hrg_project/environment/dataset/index/segments.gen");	    	
 	    	 if (file.exists()) {
@@ -87,7 +92,7 @@ public class index_test {
 	            im.openIndex();        
 	            System.out.println(question);
 	        	
-                    qres = im.search(question,0,10);
+                    qres = im.search(question,0,20);
                     System.out.println("result:");
                     return qres;
 	        }catch(Exception e){
@@ -98,7 +103,8 @@ public class index_test {
 		return qres;
 	    }
     public static void main(String[] arg) {
-    	 String dir = "E:/study/hrg_project/environment/dataset/test.xls";
+    	
+    	 String dir = "E:/study/hrg_project/environment/dataset/precision_data/test_new.xls";
     	 
     	 
 	        try{
@@ -115,41 +121,37 @@ public class index_test {
 	        	{//0代表列数，z代表行数
 	                String question1 =sheet.getCell(0, z).getContents();
 	                String question2 =sheet.getCell(1, z).getContents();
+	                
 	                Iterator<IndexManager.PCpair> qres1 = index_test.first_search(question1);
 	                Iterator<IndexManager.PCpair> qres2 = index_test.first_search(question2);
 	                String ans1 = "";
 	                String ans2 = "";
+	                String qres_ans1 = "";
+	                String qres_ans2 = "";
 	                
-//	                if(qres1 != null) ans1 = qres1.next().getQuestion();
-//	                if(qres2 != null) ans2 = qres2.next().getAnswer();
 	                if(qres1 != null) {
 		                while(qres1.hasNext()) {
-		                	ans1 += qres1.next().getQuestion()+"_";
+		                	 PCpair  temp = qres1.next();
+		                	qres_ans1 += temp.getAnswer()+"_";
+		                	break;
 		                }
-		                Label label = new Label(2, z, ans1);
-	                	sheet.addCell(label);
+	                	Label label1 = new Label(3, z, qres_ans1);
+	                	sheet.addCell(label1);
 		                System.out.println(ans1);
 	                }
 	                if(qres2 != null) {
 		                while(qres2.hasNext()) {
-		                	ans2 += qres2.next().getQuestion()+"_";
+		                	 PCpair  temp = qres2.next();
+		                	ans2 += temp.getQuestion()+"_";
+		                	qres_ans2 += temp.getAnswer()+"_";
 		                }
-		                Label label = new Label(3, z, ans2);
+		                Label label = new Label(2, z, ans2);
 	                	sheet.addCell(label);
+	                	Label label2 = new Label(4, z, qres_ans2);
+	                	sheet.addCell(label2);
 		                System.out.println(ans2);
 	                }
 	                
-//	                
-//	                if(ans1.equals(ans2) && !ans1.equals("")) {
-//	                	Label label = new Label(2, z, "1");
-//	                	sheet.addCell(label);
-//	                	System.out.println(question1 +"----"+question2+": 1" );
-//	                }
-//	                else {
-//	                	Label label = new Label(2, z, "0");
-//	                	sheet.addCell(label);
-//	                	System.out.println(question1 +"----"+question2+": 0" );
-//	                }
 	              }
 	        	book_write.write();
 	        	book_write.close();
@@ -158,35 +160,18 @@ public class index_test {
 	        	e.printStackTrace();
 	        }
     }
-    public static String sorted_by_pattern(String ans,String question) {
-    	String line = null;
-		 try {
-
-			 String[] args1 = new String[] { "python", "E:\\study\\hrg_project\\bigDataCompetition\\bank\\demo\\pattern_demo\\data\\sorted_by_pattern.py", ans,question}; 
-	           Process pr=Runtime.getRuntime().exec(args1);
-	           
-//	           Process p=Runtime.getRuntime().exec("net user");  
-//	            br=new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("GBK")));  
-	            
-	           BufferedReader in = new BufferedReader(new InputStreamReader(
-	             pr.getInputStream(),Charset.forName("GBK")));
-	           while ((line = in.readLine()) != null) {
-//	        	String newStr = new String(line.getBytes("utf-8"), "GBK");
-//	            System.out.println("*******"+newStr);
-//	            line = newStr; 
-	        	System.out.println("*******"+line);
-	            return line;
-	           }
-	           in.close();
-	           pr.waitFor();
-	           System.out.println("end");
-	          } 
-	        catch (Exception e) {
-	           e.printStackTrace();
-	          }
-		 
-    	return line;	
-    }
-    //建行外地卡取款手续费
     
+	public static String getRealPath() {  		
+		String realPath = index_test.class.getClassLoader().getResource("").getFile();  		
+		java.io.File file = new java.io.File(realPath);  		
+		realPath = file.getAbsolutePath();//去掉了最前面的斜杠/		
+		try {  			
+			realPath = java.net.URLDecoder.decode(realPath, "utf-8");  		
+			} 
+		catch (Exception e) {  			
+			e.printStackTrace();  		
+			}  		
+		return realPath;  
+	}
+
 }
