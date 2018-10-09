@@ -132,6 +132,7 @@ public class index_test {
 	                if(qres1 != null) {
 		                while(qres1.hasNext()) {
 		                	 PCpair  temp = qres1.next();
+		                	 
 		                	qres_ans1 += temp.getAnswer()+"_";
 		                	break;
 		                }
