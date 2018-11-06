@@ -30,7 +30,7 @@ public class index_test {
 	
 	//static String root_path = index_test.class.getClassLoader().getResource("").getFile().replaceAll("/voiceTest/WebContent/WEB-INF/classes/", "");
 	
-	/** 判断索引是否已经创建*/
+	/** 鍒ゆ柇绱㈠紩鏄惁宸茬粡鍒涘缓*/
  public static Boolean findIndex() {
 	    	File file = new File("E:/study/hrg_project/environment/dataset/index/segments.gen");	    	
 	    	 if (file.exists()) {
@@ -41,13 +41,13 @@ public class index_test {
 	    	 return false;	
 	    }
 	public static void build_index_test() throws IOException {
-	        //这个是建索引的过程
+	        //杩欎釜鏄缓绱㈠紩鐨勮繃绋�
 		 	System.out.println("Start making index.\n");
 	        IndexManager im = new IndexManager();
 	        String dir = "E:/study/hrg_project/environment/dataset/WechatCBC.xls";
 	        try{
 	        	Workbook book = Workbook.getWorkbook(new File(dir));
-	        	//0代表第一个工作表对象
+	        	//0浠ｈ〃绗竴涓伐浣滆〃瀵硅薄
 	        	Sheet sheet =book.getSheet(0);
 	        	int rows =sheet.getRows();
 	        	int cols =sheet.getColumns();
@@ -57,7 +57,7 @@ public class index_test {
 	        	String colname3 =sheet.getCell(2, 0).getContents().trim();
 	        	System.out.println(colname1+","+colname2+","+colname3);
 	        	for (int z = 0; z <rows; z++)
-	        	{//0代表列数，z代表行数
+	        	{//0浠ｈ〃鍒楁暟锛寊浠ｈ〃琛屾暟
 	        		String id =sheet.getCell(0, z).getContents();
 	                String question =sheet.getCell(1, z).getContents();
 	                String answer =sheet.getCell(2, z).getContents();
@@ -72,7 +72,7 @@ public class index_test {
 	    }
 
 	public static void query_test(String tmpquery) throws Exception {
-	        //单条查询，取前六，因为第一个肯定是原来的问题
+	        //鍗曟潯鏌ヨ锛屽彇鍓嶅叚锛屽洜涓虹涓�涓偗瀹氭槸鍘熸潵鐨勯棶棰�
 	        IndexManager qim = new IndexManager();
 	        qim.openIndex();
 	        Iterator<IndexManager.PCpair> qres = qim.search(tmpquery,0,14);
@@ -104,12 +104,12 @@ public class index_test {
 	    }
     public static void main(String[] arg) {
     	
-    	 String dir = "E:/study/hrg_project/environment/dataset/precision_data/test_new.xls";
+    	 String dir = "E:/study/hrg_project/environment/dataset/precision_data/test_new1028.xls";
     	 
     	 
 	        try{
 	        	Workbook book = Workbook.getWorkbook(new File(dir));
-	        	//0代表第一个工作表对象
+	        	//0浠ｈ〃绗竴涓伐浣滆〃瀵硅薄
 	        	
 	        	WritableWorkbook book_write = book.createWorkbook(new File(dir),book);
 	        	//WritableSheet sheet =book.getSheet(0);
@@ -118,7 +118,7 @@ public class index_test {
 	        	int cols =sheet.getColumns();
 	        	System.out.println(rows+","+cols);
 	        	for (int z = 0; z <rows; z++)
-	        	{//0代表列数，z代表行数
+	        	{//0浠ｈ〃鍒楁暟锛寊浠ｈ〃琛屾暟
 	                String question1 =sheet.getCell(0, z).getContents();
 	                String question2 =sheet.getCell(1, z).getContents();
 	                
@@ -165,7 +165,7 @@ public class index_test {
 	public static String getRealPath() {  		
 		String realPath = index_test.class.getClassLoader().getResource("").getFile();  		
 		java.io.File file = new java.io.File(realPath);  		
-		realPath = file.getAbsolutePath();//去掉了最前面的斜杠/		
+		realPath = file.getAbsolutePath();//鍘绘帀浜嗘渶鍓嶉潰鐨勬枩鏉�/		
 		try {  			
 			realPath = java.net.URLDecoder.decode(realPath, "utf-8");  		
 			} 
