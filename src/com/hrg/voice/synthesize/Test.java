@@ -8,6 +8,16 @@ import java.util.HashMap;
 
 import com.baidu.aip.speech.AipSpeech;
 
+
+/**
+ * 创建时间：2018年5月10日 上午11:28:31 
+ * 项目名称：voiceTest
+ * @author lingXue
+ * @version 1.0
+ * @since JDK 1.8 
+ * 文件名称：Test.java 
+ * 类说明：这个类主要是用于语音识别过程测试类
+ */
 public class Test{
 	
 	 public  final static String APP_ID = "11239226";

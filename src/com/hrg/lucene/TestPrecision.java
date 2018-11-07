@@ -3,6 +3,24 @@ package com.hrg.lucene;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+
+* 创建时间：创建时间：2018年4月27日 上午10:47:22
+
+* 项目名称：voiceTest
+
+* @author lingxue
+
+* @version 1.0
+
+* @since JDK 1.8
+
+* 文件名称：Test3.java
+
+* 类说明：这个类是用于Lucene检索的帮助类
+
+*/
+
 public class TestPrecision {
 	 public static void main(String[] arg) {
 		 try {

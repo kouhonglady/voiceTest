@@ -2,139 +2,142 @@ package com.hrg.voice.util;
 
 import java.io.FileOutputStream;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.json.JSONObject;
 import com.baidu.aip.speech.AipSpeech;
 import com.baidu.aip.speech.TtsResponse;
 
-
 /**
- * è¯­éŸ³æœåŠ¡åŠŸèƒ½æ ¸å¿ƒç±»
- * 
- * 
- *
- * @Data 2018å¹´5æœˆ18æ—¥
+ * ´´½¨Ê±¼ä£º2018Äê5ÔÂ18ÈÕ ÏÂÎç16:41:11 
+ * ÏîÄ¿Ãû³Æ£ºvoiceTest
+ * @author lingXue
+ * @version 1.0
+ * @since JDK 1.8 
+ * ÎÄ¼şÃû³Æ£ºSampleClient.java 
+ * ÀàËµÃ÷£ºÓïÒô·şÎñ¹¦ÄÜºËĞÄÀà
  */
+
 public class SampleClient {
 
-    //è®¾ç½®APPID/AK/SK 
-	 public  final String APP_ID = "11239226";
-    public  final String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";
-    public  final String SECRET_KEY = "PGOOX3p8zezqGnmMIDmg0UPD9QDsQuGU";
-    
-    // åˆå§‹åŒ–ä¸€ä¸ªFaceClient
-    AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
-    
-    /**
-     * è¯­éŸ³è¯†åˆ«
-     * @param fileName
-     * @return
-     */
-    public String getSynthesis(String filePathName){
-  
-    	 // å¯é€‰ï¼šè®¾ç½®ç½‘ç»œè¿æ¥å‚æ•°
-    	client.setConnectionTimeoutInMillis(2000); //å»ºç«‹è¿æ¥çš„è¶…æ—¶æ—¶é—´ï¼ˆå•ä½ï¼šæ¯«ç§’ï¼‰
-        client.setSocketTimeoutInMillis(60000); //é€šè¿‡æ‰“å¼€çš„è¿æ¥ä¼ è¾“æ•°æ®çš„è¶…æ—¶æ—¶é—´ï¼ˆå•ä½ï¼šæ¯«ç§’ï¼‰
-        // å¯¹æœ¬åœ°è¯­éŸ³æ–‡ä»¶è¿›è¡Œè¯†åˆ«G:\voice
-//        String path = "F:\\testvoice\\"+fileName;
-        JSONObject asrRes = client.asr(filePathName, "wav", 16000, null);
-        String Rtext = asrRes.optString("result");
-        System.out.println(asrRes);
-        String[] ss = null;
-        if(Rtext.contains("ï¼Œ")){
-        	ss=Rtext.split("ï¼Œ");
-        }else if(Rtext.contains("ï¼Ÿ")){
-        	ss=Rtext.split("ï¼Ÿ");
-        }else if(Rtext.contains("ï¼")){
-        	ss=Rtext.split("ï¼");
-        }else{
-        	return Rtext;
-        }
-        String b="";
-        for (int i = 0; i < ss.length-1; i++) {
-            String a ="";
-        	if(i==0){
-        		a = ss[i].substring(2) ;
-//        		System.out.println(ss[i].substring(2));
-        	}else{
-        		a = ss[i];
-//        		System.out.println(ss[i]);
-        	}
-        	b = b + a;
-		}
-        return b;
-    }  
-    public String getVoiceBySdk(byte[] file){
-    	  
-   	 // å¯é€‰ï¼šè®¾ç½®ç½‘ç»œè¿æ¥å‚æ•°
-   	client.setConnectionTimeoutInMillis(2000); //å»ºç«‹è¿æ¥çš„è¶…æ—¶æ—¶é—´ï¼ˆå•ä½ï¼šæ¯«ç§’ï¼‰
-       client.setSocketTimeoutInMillis(60000); //é€šè¿‡æ‰“å¼€çš„è¿æ¥ä¼ è¾“æ•°æ®çš„è¶…æ—¶æ—¶é—´ï¼ˆå•ä½ï¼šæ¯«ç§’ï¼‰
-       // å¯¹æœ¬åœ°è¯­éŸ³æ–‡ä»¶è¿›è¡Œè¯†åˆ«G:\voice
-//       String path = "F:\\testvoice\\"+fileName;
-       JSONObject asrRes = client.asr(file, "wav", 16000, null);
-       String Rtext = asrRes.optString("result");
-       System.out.println(asrRes);
-       System.out.println(Rtext);
-       String[] ss = null;
-       if(Rtext.contains("ï¼Œ")){
-       	ss=Rtext.split("ï¼Œ");
-       }else if(Rtext.contains("ï¼Ÿ")){
-       	ss=Rtext.split("ï¼Ÿ");
-       }else if(Rtext.contains("ï¼")){
-       	ss=Rtext.split("ï¼");
-       }else{
-       	return Rtext;
-       }
-       String b="";
-       for (int i = 0; i < ss.length-1; i++) {
-           String a ="";
-       	if(i==0){
-       		a = ss[i].substring(2) ;
-//       		System.out.println(ss[i].substring(2));
-       	}else{
-       		a = ss[i];
-//       		System.out.println(ss[i]);
-       	}
-       	b = b + a;
-		}
-       return b;
-   }  
+	// ÉèÖÃAPPID/AK/SK
+	public final String APP_ID = "11239226";
+	public final String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";
+	public final String SECRET_KEY = "PGOOX3p8zezqGnmMIDmg0UPD9QDsQuGU";
 
-/**
- * è¯­éŸ³åˆæˆ
- * @param text
- * @param path
- */
-   public String synthesis(String text,HttpServletRequest request){
-//	text ="æˆ‘å«å‡Œé›ªåŒå­¦"; //æ–‡å­— ä¸èƒ½è¶…è¿‡1024ä¸ªå­—èŠ‚
-       HashMap<String, Object> options = new HashMap<String, Object>();
-       options.put("spd", "5");
-       options.put("pit", "5");
-       //å‘éŸ³äººé€‰æ‹©, 0ä¸ºå¥³å£°ï¼Œ1ä¸ºç”·å£°ï¼Œ3ä¸ºæƒ…æ„Ÿåˆæˆ-åº¦é€é¥ï¼Œ4ä¸ºæƒ…æ„Ÿåˆæˆ-åº¦ä¸«ä¸«ï¼Œé»˜è®¤ä¸ºæ™®é€šå¥³
-       options.put("per", "4");
-	TtsResponse res = client.synthesis(text, "zh", 1, options);
-//	    System.out.println(res.getErrorCode());
-	    byte[] data = res.getData();
-	    System.out.println(data);
-	    try {
-	    	//é¡¹ç›®è·¯å¾„
-	    	String fPath =request.getSession().getServletContext().getRealPath("/")+ "voice/";
-	    	String fName = System.currentTimeMillis() + ".mp3";
-	    	//æŒ‡å®šä¸€ä¸ªè·¯å¾„
-//	    	String path = "C:/testvoice/bot.mp3";
-	    	String file = fPath + fName;
+	// ³õÊ¼»¯Ò»¸öFaceClient
+	AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
+
+	/**
+	 * ÓïÒôÊ¶±ğ
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public String getSynthesis(String filePathName) {
+
+		// ¿ÉÑ¡£ºÉèÖÃÍøÂçÁ¬½Ó²ÎÊı
+		client.setConnectionTimeoutInMillis(2000); // ½¨Á¢Á¬½ÓµÄ³¬Ê±Ê±¼ä£¨µ¥Î»£ººÁÃë£©
+		client.setSocketTimeoutInMillis(60000); // Í¨¹ı´ò¿ªµÄÁ¬½Ó´«ÊäÊı¾İµÄ³¬Ê±Ê±¼ä£¨µ¥Î»£ººÁÃë£©
+		// ¶Ô±¾µØÓïÒôÎÄ¼ş½øĞĞÊ¶±ğG:\voice
+		// String path = "F:\\testvoice\\"+fileName;
+		JSONObject asrRes = client.asr(filePathName, "wav", 16000, null);
+		String Rtext = asrRes.optString("result");
+		System.out.println(asrRes);
+		String[] ss = null;
+		if (Rtext.contains("£¬")) {
+			ss = Rtext.split("£¬");
+		} else if (Rtext.contains("£¿")) {
+			ss = Rtext.split("£¿");
+		} else if (Rtext.contains("£¡")) {
+			ss = Rtext.split("£¡");
+		} else {
+			return Rtext;
+		}
+		String b = "";
+		for (int i = 0; i < ss.length - 1; i++) {
+			String a = "";
+			if (i == 0) {
+				a = ss[i].substring(2);
+				// System.out.println(ss[i].substring(2));
+			} else {
+				a = ss[i];
+				// System.out.println(ss[i]);
+			}
+			b = b + a;
+		}
+		return b;
+	}
+
+	public String getVoiceBySdk(byte[] file) {
+
+		// ¿ÉÑ¡£ºÉèÖÃÍøÂçÁ¬½Ó²ÎÊı
+		client.setConnectionTimeoutInMillis(2000); // ½¨Á¢Á¬½ÓµÄ³¬Ê±Ê±¼ä£¨µ¥Î»£ººÁÃë£©
+		client.setSocketTimeoutInMillis(60000); // Í¨¹ı´ò¿ªµÄÁ¬½Ó´«ÊäÊı¾İµÄ³¬Ê±Ê±¼ä£¨µ¥Î»£ººÁÃë£©
+		// ¶Ô±¾µØÓïÒôÎÄ¼ş½øĞĞÊ¶±ğG:\voice
+		// String path = "F:\\testvoice\\"+fileName;
+		JSONObject asrRes = client.asr(file, "wav", 16000, null);
+		String Rtext = asrRes.optString("result");
+		System.out.println(asrRes);
+		System.out.println(Rtext);
+		String[] ss = null;
+		if (Rtext.contains("£¬")) {
+			ss = Rtext.split("£¬");
+		} else if (Rtext.contains("£¿")) {
+			ss = Rtext.split("£¿");
+		} else if (Rtext.contains("£¡")) {
+			ss = Rtext.split("£¡");
+		} else {
+			return Rtext;
+		}
+		String b = "";
+		for (int i = 0; i < ss.length - 1; i++) {
+			String a = "";
+			if (i == 0) {
+				a = ss[i].substring(2);
+				// System.out.println(ss[i].substring(2));
+			} else {
+				a = ss[i];
+				// System.out.println(ss[i]);
+			}
+			b = b + a;
+		}
+		return b;
+	}
+
+	/**
+	 * ÓïÒôºÏ³É
+	 * 
+	 * @param text
+	 * @param path
+	 */
+	public String synthesis(String text, HttpServletRequest request) {
+		// text ="ÎÒ½ĞÁèÑ©Í¬Ñ§"; //ÎÄ×Ö ²»ÄÜ³¬¹ı1024¸ö×Ö½Ú
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put("spd", "5");
+		options.put("pit", "5");
+		// ·¢ÒôÈËÑ¡Ôñ, 0ÎªÅ®Éù£¬1ÎªÄĞÉù£¬3ÎªÇé¸ĞºÏ³É-¶ÈåĞÒ££¬4ÎªÇé¸ĞºÏ³É-¶ÈÑ¾Ñ¾£¬Ä¬ÈÏÎªÆÕÍ¨Å®
+		options.put("per", "4");
+		TtsResponse res = client.synthesis(text, "zh", 1, options);
+		// System.out.println(res.getErrorCode());
+		byte[] data = res.getData();
+		System.out.println(data);
+		try {
+			// ÏîÄ¿Â·¾¶
+			String fPath = request.getSession().getServletContext().getRealPath("/") + "voice/";
+			String fName = System.currentTimeMillis() + ".mp3";
+			// Ö¸¶¨Ò»¸öÂ·¾¶
+			// String path = "C:/testvoice/bot.mp3";
+			String file = fPath + fName;
 			FileOutputStream fos = new FileOutputStream(file);
-			fos.write(data); 
+			fos.write(data);
 			fos.close();
 			return file;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("åˆæˆæ–‡ä»¶å¤±è´¥å¼‚å¸¸!!");
+			System.out.println("ºÏ³ÉÎÄ¼şÊ§°ÜÒì³£!!");
 			return null;
 		}
-   }
+	}
 
 }

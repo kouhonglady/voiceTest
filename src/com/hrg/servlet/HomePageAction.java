@@ -24,6 +24,20 @@ import com.hrg.voice.util.SampleClient;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
+
+/**
+* 创建时间：创建时间：2018年4月29日 上午10:37:14
+* 项目名称：voiceTest
+* @author lingxue
+* @version 1.0
+* @since JDK 1.8
+* 文件名称：HomePageAction.java
+* 类说明：检索界面中点击事件的响应函数，用于处理用户的按钮点击操作
+*/
+
+
+
+
 //用户登录处理Servlet 系统登录主页处理表单
 public class HomePageAction extends HttpServlet {
 	
@@ -39,8 +53,8 @@ public class HomePageAction extends HttpServlet {
 		super.init(config);
 		System.out.println("++++++++++++++++++");
 		try {
-			if(!index_test.findIndex())
-			index_test.build_index_test();
+			if(!IndexManagerHelper.findIndex())
+				IndexManagerHelper.build_index_test();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,7 +82,7 @@ public class HomePageAction extends HttpServlet {
 	        }else{
 	        	Date begintime = new Date();
 	        	System.out.println("start to fetch!");
-	        	Iterator<IndexManager.PCpair> qres = index_test.first_search(input_ques);
+	        	Iterator<IndexManager.PCpair> qres = IndexManagerHelper.first_search(input_ques);
 	        	
 	        	 int i=0 ;
 	        	

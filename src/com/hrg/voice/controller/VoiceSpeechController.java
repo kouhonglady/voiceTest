@@ -16,20 +16,27 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hrg.voice.util.SampleClient;
+
+
 /**
- * H5 å½•éŸ³å®ç°
- * 
- *
- *
- */
+* ´´½¨Ê±¼ä£º2018Äê5ÔÂ23ÈÕ ÏÂÎç3:30:27
+* ÏîÄ¿Ãû³Æ£ºvoiceTest
+* @author lingxue
+* @version 1.0
+* @since JDK 1.8
+* ÎÄ¼şÃû³Æ£ºVoiceSpeechController.java
+* ÀàËµÃ÷£ºH5 Â¼ÒôÊµÏÖ
+*/
+
+
 @Controller
 @RequestMapping(value = "/voiceSpeech")
 public class VoiceSpeechController {
 
-	SampleClient sc = new SampleClient(); //è¯­éŸ³è¯†åˆ«æ ¸å¿ƒç±»
+	SampleClient sc = new SampleClient(); //ÓïÒôÊ¶±ğºËĞÄÀà
 
 	/**
-	 * è®¿é—®å½•éŸ³é¡µé¢
+	 * ·ÃÎÊÂ¼ÒôÒ³Ãæ
 	 * @return
 	 * @throws Exception
 	 */
@@ -41,8 +48,8 @@ public class VoiceSpeechController {
 	}
 	
 	/**
-	 * ä¿å­˜å½•éŸ³
-	 * @date 2018å¹´5æœˆ18æ—¥ 
+	 * ±£´æÂ¼Òô
+	 * @date 2018Äê5ÔÂ18ÈÕ 
 	 * @param audioData
 	 * @return
 	 * @throws Exception
@@ -52,30 +59,30 @@ public class VoiceSpeechController {
 	public Map<String, Object> save(MultipartFile audioData,HttpServletRequest request){
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-//			//ä¿å­˜å½•éŸ³
-//			String filePathName =saveAudio(audioData);//è¿”å›éŸ³é¢‘è·¯å¾„åç§°
-//			//è¯†åˆ«å½•éŸ³
-//			String Rtext = "æœªè¯†åˆ«æ¸…æ¥š";
+//			//±£´æÂ¼Òô
+//			String filePathName =saveAudio(audioData);//·µ»ØÒôÆµÂ·¾¶Ãû³Æ
+//			//Ê¶±ğÂ¼Òô
+//			String Rtext = "Î´Ê¶±ğÇå³ş";
 //			if ((filePathName)!="") {
 //				System.out.println(filePathName);
 //				Rtext = sc.getSynthesis(filePathName);
 //				modelMap.put("success", true);
 //			}
-//			//æ ¹æ®è¯­éŸ³è¯†åˆ«å†…å®¹ åˆæˆå›å¤è¯­éŸ³
+//			//¸ù¾İÓïÒôÊ¶±ğÄÚÈİ ºÏ³É»Ø¸´ÓïÒô
 ////			String res = "";
-////			if("ä½ å¥½".equals(Rtext)){
-////	    		 res = "æˆ‘çŸ¥é“ä½ ä¹Ÿå¾ˆå¥½å‘€";
+////			if("ÄãºÃ".equals(Rtext)){
+////	    		 res = "ÎÒÖªµÀÄãÒ²ºÜºÃÑ½";
 ////	    	}else{
-////	    		 res = "å¯¹ä¸èµ·ï¼Œæˆ‘ä¸å¤ªæ˜ç™½";
+////	    		 res = "¶Ô²»Æğ£¬ÎÒ²»Ì«Ã÷°×";
 ////	    	}
-//			String name = sc.synthesis("æˆ‘å«å‡Œé›ªåŒå­¦",request);//åˆæˆéœ€è¦æ’­æ”¾çš„å½•éŸ³
+//			String name = sc.synthesis("ÎÒ½ĞÁèÑ©Í¬Ñ§",request);//ºÏ³ÉĞèÒª²¥·ÅµÄÂ¼Òô
 //			System.out.println(name);
-//			System.out.println("è¯­éŸ³è¯†åˆ«çš„å†…å®¹ï¼š" + Rtext);
+//			System.out.println("ÓïÒôÊ¶±ğµÄÄÚÈİ£º" + Rtext);
 //			modelMap.put("Rtext", Rtext);
 ////			modelMap.put("res", res);
 ////			modelMap.put("name", name);
 			
-			//éŸ³é¢‘æ–‡ä»¶ è½¬åŒ–ä¸º byte[]
+			//ÒôÆµÎÄ¼ş ×ª»¯Îª byte[]
 			InputStream content = audioData.getInputStream();
 			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
 			byte[] buff = new byte[100];
@@ -83,10 +90,10 @@ public class VoiceSpeechController {
 			while ((rc = content.read(buff, 0, 100)) > 0) {
 				swapStream.write(buff, 0, rc);
 			}
-			// è·å¾—äºŒè¿›åˆ¶æ•°ç»„
+			// »ñµÃ¶ş½øÖÆÊı×é
 			byte[] byte1 = swapStream.toByteArray();
 			String Rtext = sc.getVoiceBySdk(byte1);
-			System.out.println("è¯­éŸ³è¯†åˆ«å†…å®¹:"+Rtext);
+			System.out.println("ÓïÒôÊ¶±ğÄÚÈİ:"+Rtext);
 			modelMap.put("success", true);
 			modelMap.put("Rtext", Rtext);
 			
@@ -100,7 +107,7 @@ public class VoiceSpeechController {
 	}
 	
 	/**
-	 * ä¿å­˜éŸ³é¢‘æ–‡ä»¶
+	 * ±£´æÒôÆµÎÄ¼ş
 	 * @param audioData
 	 * @return
 	 */
@@ -109,21 +116,21 @@ public class VoiceSpeechController {
 			String filePathName = null;
 			String fName = System.currentTimeMillis() + ".wav";
 	        String fPath = "C:/testvoice";
-	        //å°†å½•éŸ³çš„æ–‡ä»¶å­˜æ”¾åˆ°Fç›˜ä¸‹è¯­éŸ³æ–‡ä»¶å¤¹ä¸‹  
+	        //½«Â¼ÒôµÄÎÄ¼ş´æ·Åµ½FÅÌÏÂÓïÒôÎÄ¼ş¼ĞÏÂ  
 	        File filePath = new File(fPath);  
 	        if(!filePath.exists())  
-	        {//å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºè¯¥ç›®å½•  
+	        {//Èç¹ûÎÄ¼ş²»´æÔÚ£¬Ôò´´½¨¸ÃÄ¿Â¼  
 	            filePath.mkdir();  
 	        }  
 	        filePathName = fPath+"/"+fName;
 			FileOutputStream os = new FileOutputStream(filePathName); 
-			System.out.println("è·¯å¾„ï¼š"+filePathName);
+			System.out.println("Â·¾¶£º"+filePathName);
 	        InputStream in = audioData.getInputStream();  
 	        int b = 0;  
-	        while((b=in.read())!=-1){ //è¯»å–æ–‡ä»¶   
+	        while((b=in.read())!=-1){ //¶ÁÈ¡ÎÄ¼ş   
 	            os.write(b);  
 	        }  
-	        os.flush(); //å…³é—­æµ   
+	        os.flush(); //¹Ø±ÕÁ÷   
 	        in.close();  
 	        os.close();  
 	        return filePathName;

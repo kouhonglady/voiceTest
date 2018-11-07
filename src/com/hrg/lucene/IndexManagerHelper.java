@@ -2,14 +2,9 @@ package com.hrg.lucene;
 
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.util.Date;
 import java.util.Iterator;
-import javax.servlet.RequestDispatcher;
 import org.json.JSONException;
 import com.hrg.lucene.IndexManager.PCpair;
-import com.hrg.voice.synthesize.MyThread;
-
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -17,21 +12,25 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 /**
- * Created by lingxue
- * 
- * 
- */
+* 创建时间：创建时间：2018年4月27日 上午9:44:37
+* 项目名称：voiceTest
+* @author lingxue
+* @version 1.0
+* @since JDK 1.8
+* 文件名称：IndexManagerHelper.java
+* 类说明：这个类是用于Lucene检索的帮助类
+*/
 
 
 
-public class index_test {
-	//This is a test
+public class IndexManagerHelper {
+	
 	int num=1;
 	
 	//static String root_path = index_test.class.getClassLoader().getResource("").getFile().replaceAll("/voiceTest/WebContent/WEB-INF/classes/", "");
 	
-	/** 鍒ゆ柇绱㈠紩鏄惁宸茬粡鍒涘缓*/
- public static Boolean findIndex() {
+	/** 判断索引是否已经建立  */
+   public static Boolean findIndex() {
 	    	File file = new File("E:/study/hrg_project/environment/dataset/index/segments.gen");	    	
 	    	 if (file.exists()) {
 	    		 System.out.println("file exists");
@@ -41,13 +40,13 @@ public class index_test {
 	    	 return false;	
 	    }
 	public static void build_index_test() throws IOException {
-	        //杩欎釜鏄缓绱㈠紩鐨勮繃绋�
+	        //建索引的过程
 		 	System.out.println("Start making index.\n");
 	        IndexManager im = new IndexManager();
 	        String dir = "E:/study/hrg_project/environment/dataset/WechatCBC.xls";
 	        try{
 	        	Workbook book = Workbook.getWorkbook(new File(dir));
-	        	//0浠ｈ〃绗竴涓伐浣滆〃瀵硅薄
+	        	//getSheet（0）表示的是得到第一个表格的内容
 	        	Sheet sheet =book.getSheet(0);
 	        	int rows =sheet.getRows();
 	        	int cols =sheet.getColumns();
@@ -57,7 +56,7 @@ public class index_test {
 	        	String colname3 =sheet.getCell(2, 0).getContents().trim();
 	        	System.out.println(colname1+","+colname2+","+colname3);
 	        	for (int z = 0; z <rows; z++)
-	        	{//0浠ｈ〃鍒楁暟锛寊浠ｈ〃琛屾暟
+	        	{
 	        		String id =sheet.getCell(0, z).getContents();
 	                String question =sheet.getCell(1, z).getContents();
 	                String answer =sheet.getCell(2, z).getContents();
@@ -72,7 +71,7 @@ public class index_test {
 	    }
 
 	public static void query_test(String tmpquery) throws Exception {
-	        //鍗曟潯鏌ヨ锛屽彇鍓嶅叚锛屽洜涓虹涓�涓偗瀹氭槸鍘熸潵鐨勯棶棰�
+	        //单条查询，即输入一个检索字段进行检索。检索结果为一个列表，通过返回Iterator
 	        IndexManager qim = new IndexManager();
 	        qim.openIndex();
 	        Iterator<IndexManager.PCpair> qres = qim.search(tmpquery,0,14);
@@ -91,8 +90,7 @@ public class index_test {
 	            im = new IndexManager();
 	            im.openIndex();        
 	            System.out.println(question);
-	        	
-                    qres = im.search(question,0,20);
+                    qres = im.search(question,0,20);//这里的question 为检索的关键字，（0,20）表示返回检索结果的前20条
                     System.out.println("result:");
                     return qres;
 	        }catch(Exception e){
@@ -102,6 +100,11 @@ public class index_test {
 	    System.out.println("down!");
 		return qres;
 	    }
+	
+	/**
+	 * 
+	 * 这里的main 主要用于在检测系统的检索准确程度
+	 */
     public static void main(String[] arg) {
     	
     	 String dir = "E:/study/hrg_project/environment/dataset/precision_data/test_new1028.xls";
@@ -122,8 +125,8 @@ public class index_test {
 	                String question1 =sheet.getCell(0, z).getContents();
 	                String question2 =sheet.getCell(1, z).getContents();
 	                
-	                Iterator<IndexManager.PCpair> qres1 = index_test.first_search(question1);
-	                Iterator<IndexManager.PCpair> qres2 = index_test.first_search(question2);
+	                Iterator<IndexManager.PCpair> qres1 = IndexManagerHelper.first_search(question1);
+	                Iterator<IndexManager.PCpair> qres2 = IndexManagerHelper.first_search(question2);
 	                String ans1 = "";
 	                String ans2 = "";
 	                String qres_ans1 = "";
@@ -163,9 +166,9 @@ public class index_test {
     }
     
 	public static String getRealPath() {  		
-		String realPath = index_test.class.getClassLoader().getResource("").getFile();  		
+		String realPath = IndexManagerHelper.class.getClassLoader().getResource("").getFile();  		
 		java.io.File file = new java.io.File(realPath);  		
-		realPath = file.getAbsolutePath();//鍘绘帀浜嗘渶鍓嶉潰鐨勬枩鏉�/		
+		realPath = file.getAbsolutePath();	
 		try {  			
 			realPath = java.net.URLDecoder.decode(realPath, "utf-8");  		
 			} 

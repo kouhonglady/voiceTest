@@ -16,66 +16,78 @@ import com.baidu.aip.util.Util;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
-public class VoiceSynthesize implements  Runnable
-{
-	
-	   //è®¾ç½®APPID/AK/SK 
-		 public  final static String APP_ID = "11239226";
-	    public  final static String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";
-	    public  final static String SECRET_KEY = "PGOOX3p8zezqGnmMIDmg0UPD9QDsQuGU";
-	    String filename = "";
-        public void setFilename(String filename) {
-			this.filename = filename;
+/**
+ * ´´½¨Ê±¼ä£º2018Äê5ÔÂ10ÈÕ ÉÏÎç11:41:12 
+ * ÏîÄ¿Ãû³Æ£ºvoiceTest
+ * @author lingXue
+ * @version 1.0
+ * @since JDK 1.8 
+ * ÎÄ¼şÃû³Æ£ºVoiceSynthesize.java 
+ * ÀàËµÃ÷£ºÕâ¸öÀàÖ÷ÒªÊÇÍ¨¹ı runnable µÄ·½Ê½ÊµÏÖÓïÒôÊ¶±ğ¹ı³ÌÀà
+ */
+
+public class VoiceSynthesize implements Runnable {
+
+	// ÉèÖÃAPPID/AK/SK
+	public final static String APP_ID = "11239226";
+	public final static String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";
+	public final static String SECRET_KEY = "PGOOX3p8zezqGnmMIDmg0UPD9QDsQuGU";
+	String filename = "";
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	@Override
+	public void run() {
+		try {
+			new Player(new BufferedInputStream(new FileInputStream(new File(filename)))).play();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-    	@Override
-    	public void run() {
-    		try {
-				new Player(new BufferedInputStream(new FileInputStream(new File(filename)))).play();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JavaLayerException e) {
-				// TODO Auto-generated catch block
+	}
+
+	public static void main(String[] args) {
+		// ³õÊ¼»¯Ò»¸öAipSpeech
+		AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
+		// ¿ÉÑ¡£ºÉèÖÃÍøÂçÁ¬½Ó²ÎÊı
+		client.setConnectionTimeoutInMillis(2000);
+		client.setSocketTimeoutInMillis(60000);
+		// ¿ÉÑ¡£ºÉèÖÃ´úÀí·şÎñÆ÷µØÖ·, httpºÍsocket¶şÑ¡Ò»£¬»òÕß¾ù²»ÉèÖÃ
+		// client.setHttpProxy("proxy_host", proxy_port); // ÉèÖÃhttp´úÀí
+		// client.setSocketProxy("proxy_host", proxy_port); // ÉèÖÃsocket´úÀí
+		// µ÷ÓÃ½Ó¿Ú
+
+		// ¿ÉÑ¡£ºÉèÖÃlog4jÈÕÖ¾Êä³ö¸ñÊ½£¬Èô²»ÉèÖÃ£¬ÔòÊ¹ÓÃÄ¬ÈÏÅäÖÃ
+		// Ò²¿ÉÒÔÖ±½ÓÍ¨¹ıjvmÆô¶¯²ÎÊıÉèÖÃ´Ë»·¾³±äÁ¿
+		System.setProperty("aip.log4j.conf", "path/to/your/log4j.properties");
+
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put("spd", "5");
+		options.put("pit", "5");
+		// ·¢ÒôÈËÑ¡Ôñ, 0ÎªÅ®Éù£¬1ÎªÄĞÉù£¬3ÎªÇé¸ĞºÏ³É-¶ÈåĞÒ££¬4ÎªÇé¸ĞºÏ³É-¶ÈÑ¾Ñ¾£¬Ä¬ÈÏÎªÆÕÍ¨Å®
+		options.put("per", "4");
+		String string = "ÄãºÃ°Ù¶È";
+		// µ÷ÓÃ½Ó¿Ú
+		TtsResponse res = client.synthesis(string, "zh", 1, options);
+
+		// TtsResponse res = client.synthesis("ÄãºÃ°Ù¶È", "zh", 1, null);
+		byte[] data = res.getData();
+		JSONObject res1 = res.getResult();
+		if (data != null) {
+			try {
+				Util.writeBytesToFileSystem(data, "output.mp3");
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-     }
-//	        public static void main(String[] args) {
-//	            // åˆå§‹åŒ–ä¸€ä¸ªAipSpeech
-//	            AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
-//	            // å¯é€‰ï¼šè®¾ç½®ç½‘ç»œè¿æ¥å‚æ•°
-//	            client.setConnectionTimeoutInMillis(2000);
-//	            client.setSocketTimeoutInMillis(60000);
-//	            // å¯é€‰ï¼šè®¾ç½®ä»£ç†æœåŠ¡å™¨åœ°å€, httpå’ŒsocketäºŒé€‰ä¸€ï¼Œæˆ–è€…å‡ä¸è®¾ç½®
-//	            //client.setHttpProxy("proxy_host", proxy_port);  // è®¾ç½®httpä»£ç†
-//	            //client.setSocketProxy("proxy_host", proxy_port);  // è®¾ç½®socketä»£ç†
-//	            // è°ƒç”¨æ¥å£
-//	            
-//	         // å¯é€‰ï¼šè®¾ç½®log4jæ—¥å¿—è¾“å‡ºæ ¼å¼ï¼Œè‹¥ä¸è®¾ç½®ï¼Œåˆ™ä½¿ç”¨é»˜è®¤é…ç½®
-//	            // ä¹Ÿå¯ä»¥ç›´æ¥é€šè¿‡jvmå¯åŠ¨å‚æ•°è®¾ç½®æ­¤ç¯å¢ƒå˜é‡
-//	            System.setProperty("aip.log4j.conf", "path/to/your/log4j.properties");
-//	            
-//	            HashMap<String, Object> options = new HashMap<String, Object>();
-//	            options.put("spd", "5");
-//	            options.put("pit", "5");
-//	            //å‘éŸ³äººé€‰æ‹©, 0ä¸ºå¥³å£°ï¼Œ1ä¸ºç”·å£°ï¼Œ3ä¸ºæƒ…æ„Ÿåˆæˆ-åº¦é€é¥ï¼Œ4ä¸ºæƒ…æ„Ÿåˆæˆ-åº¦ä¸«ä¸«ï¼Œé»˜è®¤ä¸ºæ™®é€šå¥³
-//	            options.put("per", "4");
-//	            String string = "ä½ å¥½ç™¾åº¦";
-//	            // è°ƒç”¨æ¥å£
-//	            TtsResponse res = client.synthesis(string, "zh", 1, options);
-//	            
-//	            //TtsResponse res = client.synthesis("ä½ å¥½ç™¾åº¦", "zh", 1, null);
-//	            byte[] data = res.getData();
-//	            JSONObject res1 = res.getResult();
-//	            if (data != null) {
-//	                try {
-//	                    Util.writeBytesToFileSystem(data, "output.mp3");
-//	                } catch (IOException e) {
-//	                    e.printStackTrace();
-//	                }
-//	            }
-//	            if (res1 != null) {
-//	               System.out.println(res1.toString(2));
-//	            }
-//	        }
+		}
+		if (res1 != null) {
+			System.out.println(res1.toString(2));
+		}
+	}
 
 }

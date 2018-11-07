@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/com/hrg/lucene/index_test.java=UTF-8
+encoding//src/com/hrg/lucene/IndexManager.java=UTF-8
+encoding//src/com/hrg/lucene/IndexManagerHelper.java=UTF-8
+encoding//src/com/hrg/servlet/HomePageAction.java=UTF-8
+encoding/<project>=GBK
