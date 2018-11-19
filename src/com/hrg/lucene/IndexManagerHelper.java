@@ -93,7 +93,7 @@ public class IndexManagerHelper {
                     qres = im.search(question,0,20);//这里的question 为检索的关键字，（0,20）表示返回检索结果的前20条
                     System.out.println("result:");
 //                    return CNN.sort_by_cnn(question, qres);
-                    return  SocketConnect2CNN.sort_by_cnn(question, qres);
+                    return  SocketConnect2CNN.sort_by_cnn_socket(question, qres);
 //                     return qres;
              
 	        }catch(Exception e){

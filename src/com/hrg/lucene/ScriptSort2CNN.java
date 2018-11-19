@@ -1,43 +1,32 @@
 package com.hrg.lucene;
-//
-//public class CNN {
-//	public static void main(String[] args) {
-//	}
-//}
-
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
-import org.tensorflow.Graph;
-import org.tensorflow.Session;
-import org.tensorflow.Tensor;
-
 import com.hrg.lucene.IndexManager.PCpair;
 
-import jxl.write.Label;
 
-public class CNN {
-	public static Iterator<IndexManager.PCpair> sort_by_cnn(String quesiton, Iterator<IndexManager.PCpair>  qres) {
+/**
+ * 
+ * 创建时间：创建时间：2018年11月10日 下午2:35:17
+ * 项目名称：voiceTest
+ * @author lingxue
+ * @version 1.0
+ * @since JDK 1.8
+ * 文件名称：ScriptSort2CNN.java
+ * 
+ * 类说明：这个类用于将检索结果通过cnn进行重新排序，但是交互方式为，Javaweb调用python脚本的方式进行。
+ * 
+ * 
+ * 
+ */
+
+public class ScriptSort2CNN {
+	public static Iterator<IndexManager.PCpair> sort_by_cnn_script(String quesiton, Iterator<IndexManager.PCpair>  qres) {
 		List<PCpair> result = new LinkedList<PCpair>();
 		String qres_to_string ="";
 		try {
@@ -72,7 +61,7 @@ public class CNN {
 	
 	public static void main(String[] args) throws JSONException, IOException {
 		Iterator<IndexManager.PCpair> qres1 = IndexManagerHelper.first_search("信用卡密码忘了");
-		Iterator<IndexManager.PCpair> result = sort_by_cnn("信用卡密码忘了", qres1);
+		Iterator<IndexManager.PCpair> result = sort_by_cnn_script("信用卡密码忘了", qres1);
 		System.out.println("the final ans");
 		if(result != null) {
             while(result.hasNext()) { 
