@@ -92,7 +92,10 @@ public class IndexManagerHelper {
 	            System.out.println(question);
                     qres = im.search(question,0,20);//这里的question 为检索的关键字，（0,20）表示返回检索结果的前20条
                     System.out.println("result:");
-                    return qres;
+//                    return CNN.sort_by_cnn(question, qres);
+                    return  SocketConnect2CNN.sort_by_cnn(question, qres);
+//                     return qres;
+             
 	        }catch(Exception e){
 	        	e.printStackTrace();
 	        }
@@ -107,7 +110,7 @@ public class IndexManagerHelper {
 	 */
     public static void main(String[] arg) {
     	
-    	 String dir = "E:/study/hrg_project/environment/dataset/precision_data/test_new1028.xls";
+    	 String dir = "E:/study/hrg_project/environment/dataset/precision_data/test_new_pred_to_find_similarity_result.xls";
     	 
     	 
 	        try{

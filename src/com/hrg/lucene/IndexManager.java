@@ -184,6 +184,9 @@ public class IndexManager {
         public float getScore(){
             return s;
         }
+        public String toString() {
+        	return q +"_"+a;
+        }
     }
 
 }
