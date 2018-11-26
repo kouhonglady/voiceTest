@@ -54,7 +54,7 @@ public class SocketConnect2CNN {
 		jsonObject.put("question", question);
 		jsonObject.put("answers", qres_to_string);
 		String str = jsonObject.toString();
-		// System.out.println(str);
+		 System.out.println(str);
 
 		// 访问服务进程的套接字
 		Socket socket = null;
@@ -72,7 +72,9 @@ public class SocketConnect2CNN {
 			OutputStream os = socket.getOutputStream();
 			PrintStream out = new PrintStream(os);
 			// 发送内容
-			out.print(str);
+			String temp = new String(str.getBytes("utf-8"),"utf-8");
+			System.out.println(temp);
+			out.print(temp);
 			// 告诉服务进程，内容发送完毕，可以开始处理
 			out.print("over");
 			// 获取服务进程的输入流

@@ -68,14 +68,14 @@ public class HomePageAction extends HttpServlet {
 	{
 		
 		System.out.println("++++++++this is doGet++++++++++");
-
 		//查询数据库和跳转到登录主界面
 		try {
 			//查询数据库操作
 			//跳转到主界面
 
 	        String input = request.getParameter("inputMessage");
-	        String input_ques = new String(input.getBytes("ISO-8859-1"),"utf-8");
+	        
+	        String input_ques = new String(input.getBytes("utf-8"),"utf-8");
 	        if(input_ques==null||input_ques.trim().length()==0) {  
 	        	response.sendRedirect("index.jsp"); 
 	        	

@@ -18,7 +18,7 @@ import com.baidu.aip.speech.AipSpeech;
  * 文件名称：Test.java 
  * 类说明：这个类主要是用于语音识别过程测试类
  */
-public class Test{
+public class VoiceSynthesizeTest{
 	
 	 public  final static String APP_ID = "11239226";
 	    public  final static String API_KEY = "mFvfdlIrS4W5syGAxRUEkh3R";
